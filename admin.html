@@ -1,0 +1,12 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Foule — Administration</title>
+<style>body{font:16px system-ui;margin:0;padding:5vw;background:#f3f4f1;color:#0b1033}h1{letter-spacing:-.03em}table{width:100%;border-collapse:collapse;background:#fff;margin:12px 0 36px}td,th{padding:10px;border-bottom:1px solid #d9dbd3;text-align:left;font-size:14px}.w{overflow-x:auto}input,button,select{font:inherit;padding:8px}</style></head><body>
+<h1>Administration Foule</h1><div id="login"><input id="em" placeholder="E-mail"><input id="pw" type="password" placeholder="Mot de passe"><button onclick="go()">Connexion</button></div><div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js"></script><script src="config.js"></script>
+<script>
+const sb=supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY),$=s=>document.querySelector(s),e=c=>(c/100).toFixed(2).replace('.',',')+' €';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let tok;async function go(){const{data,error}=await sb.auth.signInWithPassword({email:$('#em').value,password:$('#pw').value});if(error)return alert(error.message);tok=data.session.access_token;draw()}
+async function draw(){const r=await fetch('/api/admin',{headers:{Authorization:'Bearer '+tok}}),d=await r.json();if(!r.ok)return alert(d.error);$('#login').style.display='none';
+$('#app').innerHTML=`<h2>Commandes (${d.orders.length})</h2><div class="w"><table><tr><th>Date<th>Client<th>Produits<th>Total<th>Statut</tr>${d.orders.map(o=>`<tr><td>${new Date(o.created_at).toLocaleString('fr-FR')}<td>${esc(o.email)}<td>${o.order_items.map(i=>esc(i.name)).join(', ')}<td>${e(o.total_cents)}<td><select onchange="st('${o.id}',this.value)">${['pending','paid','refunded','cancelled'].map(s=>`<option ${s===o.status?'selected':''}>${s}</option>`).join('')}</select></tr>`).join('')}</table></div><h2>Clients (${d.customers.length})</h2><div class="w"><table><tr><th>E-mail<th>Inscrit le</tr>${d.customers.map(c=>`<tr><td>${esc(c.email)}<td>${new Date(c.created_at).toLocaleDateString('fr-FR')}</tr>`).join('')}</table></div>`}
+async function st(id,status){await fetch('/api/admin',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+tok},body:JSON.stringify({id,status})})}
+</script></body></html>

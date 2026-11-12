@@ -1,0 +1,74 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Foule — Les outils des coureurs</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f4f1;--ink:#0b1033;--blue:#2438ff;--mut:#5b6080;--line:#d9dbd3;--w:#fff}
+*{box-sizing:border-box;margin:0}body{font:400 17px/1.55 'Bricolage Grotesque',system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button,input{font:inherit}a{color:inherit}:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 5vw;position:sticky;top:0;background:var(--bg);z-index:5;border-bottom:1px solid var(--line)}
+.logo{font-weight:800;font-size:26px;letter-spacing:-.04em;text-decoration:none}.logo i{color:var(--blue);font-style:normal}
+nav{display:flex;gap:10px}nav button{background:none;border:1px solid var(--ink);border-radius:99px;padding:7px 16px;cursor:pointer}nav button.p{background:var(--ink);color:#fff}
+.hero{padding:9vh 5vw 7vh;background:radial-gradient(circle,#b9bdd0 2.2px,transparent 2.5px) 0 0/22px 22px;position:relative}
+.hero h1{font-weight:800;font-size:clamp(3.2rem,11vw,9rem);line-height:.9;letter-spacing:-.05em;max-width:12ch;background:var(--bg);display:inline;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 .12em 0 0}
+.hero p{margin-top:28px;max-width:34ch;font-size:1.25rem;background:var(--bg);display:inline-block;padding:4px 8px 4px 0}
+.btn{background:var(--blue);color:#fff;border:0;border-radius:99px;padding:13px 26px;font-weight:600;cursor:pointer}.btn:hover{filter:brightness(1.1)}.btn[disabled]{opacity:.5}
+section{padding:8vh 5vw}h2{font-size:clamp(1.8rem,4vw,2.8rem);letter-spacing:-.03em;font-weight:800;margin-bottom:32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:26px}
+.bib{background:var(--w);border:2px solid var(--ink);border-radius:10px;padding:34px 24px 24px;position:relative;display:flex;flex-direction:column;gap:14px;transition:transform .2s}.bib:hover{transform:rotate(-1deg) translateY(-4px)}
+.bib:before,.bib:after{content:"";position:absolute;top:10px;width:11px;height:11px;border-radius:50%;border:2px solid var(--ink);background:var(--bg)}.bib:before{left:12px}.bib:after{right:12px}
+.bib .n{font-size:5.2rem;font-weight:800;line-height:.9;letter-spacing:-.06em;color:var(--blue)}.bib .n small{font-size:1.6rem;letter-spacing:0}
+.bib h3{font-size:1.4rem;line-height:1.15}.bib p{color:var(--mut);flex:1;font-size:.98rem}.bib .btn{align-self:flex-start}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;color:var(--mut)}.how b{display:block;color:var(--ink);font-size:1.15rem}
+footer{padding:36px 5vw;border-top:1px solid var(--line);color:var(--mut);font-size:.9rem}
+.ov{position:fixed;inset:0;background:rgba(11,16,51,.45);display:none;justify-content:flex-end;z-index:20}.ov.on{display:flex}
+.pan{background:var(--bg);width:min(440px,100%);height:100%;padding:26px;overflow:auto;display:flex;flex-direction:column;gap:14px;animation:s .25s}@keyframes s{from{transform:translateX(40px);opacity:0}}
+.pan h3{font-size:1.5rem}.row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center}
+input{width:100%;padding:12px 14px;border:1px solid var(--ink);border-radius:8px;background:var(--w)}
+.x{align-self:flex-end;background:none;border:0;font-size:1.6rem;cursor:pointer}.lnk{background:none;border:0;text-decoration:underline;cursor:pointer;color:var(--mut)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:14px 22px;border-radius:10px;z-index:30;max-width:90vw;display:none}
+.ok{background:var(--blue);color:#fff;padding:14px 5vw;font-weight:600;display:none}.st{font-size:.8rem;border:1px solid var(--ink);border-radius:99px;padding:1px 10px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<div class="ok" id="ok">Merci ! Votre paiement est confirmé. Vos fichiers sont disponibles dans votre espace client.</div>
+<header><a class="logo" href="/">foule<i>.</i></a><nav><button id="bAcc">Se connecter</button><button class="p" id="bCart">Panier (0)</button></nav></header>
+<div class="hero"><h1>Chaque coureur a sa place dans la foule.</h1><br><p>Trois outils simples pour noter, préparer et suivre vos courses.</p><br><br><a href="#boutique"><button class="btn">Voir la boutique</button></a></div>
+<section id="boutique"><h2>La boutique</h2><div class="grid" id="grid"></div></section>
+<section><h2>Comment ça marche</h2><div class="how"><div><b>Vous choisissez</b>Ajoutez vos produits au panier.</div><div><b>Vous payez par carte</b>Paiement sécurisé par Stripe.</div><div><b>Vous téléchargez</b>Vos fichiers vous attendent dans votre espace client.</div></div></section>
+<footer>© Foule — Paiement sécurisé par Stripe. Produits numériques livrés immédiatement après paiement.</footer>
+<div class="ov" id="ov"><div class="pan" id="pan"></div></div><div class="toast" id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
+<script>
+const $=s=>document.querySelector(s),sb=supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY);
+const eur=c=>(c/100).toFixed(2).replace('.',',')+' €';
+let products=[],cart=JSON.parse(localStorage.getItem('cart')||'[]'),user=null,session=null;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',3800)}
+function save(){localStorage.setItem('cart',JSON.stringify(cart));$('#bCart').textContent=`Panier (${cart.length})`}
+function open(h){$('#pan').innerHTML='<button class="x" aria-label="Fermer" onclick="closeP()">×</button>'+h;$('#ov').classList.add('on')}
+function closeP(){$('#ov').classList.remove('on')}$('#ov').onclick=e=>{if(e.target.id==='ov')closeP()};
+async function load(){
+  const{data}=await sb.from('products').select('*').eq('active',true).order('position');products=data||[];
+  $('#grid').innerHTML=products.map(p=>{const[a,b]=eur(p.price_cents).replace(' €','').split(',');return`<article class="bib"><div class="n">${a}<small>,${b} €</small></div><h3>${esc(p.name)}</h3><p>${esc(p.description)}</p><button class="btn" onclick="add('${p.slug}')">Ajouter au panier</button></article>`}).join('')||'<p>Aucun produit pour le moment.</p>';
+}
+function add(s){if(!cart.includes(s))cart.push(s);save();toast('Ajouté au panier');}
+function showCart(){const L=cart.map(s=>products.find(p=>p.slug===s)).filter(Boolean),t=L.reduce((a,p)=>a+p.price_cents,0);
+  open(`<h3>Votre panier</h3>${L.map(p=>`<div class="row"><span>${esc(p.name)}</span><span>${eur(p.price_cents)} <button class="lnk" onclick="rm('${p.slug}')">Retirer</button></span></div>`).join('')||'<p>Votre panier est vide. Ajoutez un produit depuis la boutique.</p>'}${L.length?`<div class="row"><b>Total</b><b>${eur(t)}</b></div><button class="btn" id="pay" onclick="pay()">Payer par carte</button>`:''}`)}
+function rm(s){cart=cart.filter(x=>x!==s);save();showCart()}
+async function pay(){if(!user){toast('Connectez-vous pour finaliser la commande.');return account()}
+  $('#pay').disabled=true;const r=await fetch('/api/checkout',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token},body:JSON.stringify({slugs:cart})});
+  const d=await r.json();if(d.url){cart=[];save();location=d.url}else{toast(d.error||'Erreur de paiement');$('#pay').disabled=false}}
+function account(){if(user)return orders();
+  open(`<h3>Espace client</h3><p>Connectez-vous ou créez un compte pour commander et retrouver vos achats.</p><input id="em" type="email" placeholder="Adresse e-mail" autocomplete="email"><input id="pw" type="password" placeholder="Mot de passe (6 caractères min.)" autocomplete="current-password"><button class="btn" onclick="auth(false)">Se connecter</button><button class="lnk" onclick="auth(true)">Créer mon compte</button>`)}
+async function auth(up){const c={email:$('#em').value,password:$('#pw').value};
+  const{error}=up?await sb.auth.signUp(c):await sb.auth.signInWithPassword(c);
+  if(error)return toast(error.message);if(up)toast('Compte créé. Vérifiez votre e-mail si une confirmation est demandée.');}
+async function orders(){const{data}=await sb.from('orders').select('*,order_items(slug,name)').order('created_at',{ascending:false});
+  open(`<h3>Mes commandes</h3><p>${esc(user.email)}</p>${(data||[]).map(o=>`<div class="row" style="flex-direction:column;align-items:flex-start"><div><b>${new Date(o.created_at).toLocaleDateString('fr-FR')}</b> — ${eur(o.total_cents)} <span class="st">${o.status==='paid'?'Payée':o.status==='pending'?'En attente':esc(o.status)}</span></div>${o.order_items.map(i=>`<div>${esc(i.name)} ${o.status==='paid'?`<button class="lnk" onclick="dl('${i.slug}')">Télécharger</button>`:''}</div>`).join('')}</div>`).join('')||'<p>Aucune commande pour le moment.</p>'}<button class="lnk" onclick="sb.auth.signOut();closeP()">Se déconnecter</button>`)}
+async function dl(s){const r=await fetch('/api/download?slug='+s,{headers:{Authorization:'Bearer '+session.access_token}});const d=await r.json();d.url?location=d.url:toast(d.error)}
+sb.auth.onAuthStateChange((_,s)=>{session=s;user=s?.user||null;$('#bAcc').textContent=user?'Mon compte':'Se connecter';if(user&&$('#ov').classList.contains('on')&&$('#pan').textContent.includes('Espace client'))orders()});
+$('#bAcc').onclick=account;$('#bCart').onclick=showCart;
+if(location.search.includes('success')){$('#ok').style.display='block';history.replaceState({},'','/')}
+if(location.search.includes('cancel')){toast('Paiement annulé. Votre commande n’a pas été débitée.');history.replaceState({},'','/')}
+save();load();
+</script></body></html>

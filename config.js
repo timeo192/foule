@@ -1,0 +1,1 @@
+window.CFG = { SUPABASE_URL: 'https://wgnxecuwarfaddlaecia.supabase.co/rest/v1/', SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndnbnhlY3V3YXJmYWRkbGFlY2lhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ0OTQxODEsImV4cCI6MjExMDA3MDE4MX0.mg50LymwFqc1kAlEoTbrZFay4Fpd9SrTBoyfyqKCS9I' };
